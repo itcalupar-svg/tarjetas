@@ -317,7 +317,7 @@ function guardarContacto() {
         `FN:${esc(datos.nombre + " " + datos.apellido)}`,
         `ORG:Tamalera del Sur`,
         tel && `TEL;TYPE=CELL:${tel}`,
-        datos.correo && `EMAIL;TYPE=INTERNET:${datos.correo}`,
+        datos.correo && `EMAIL;TYPE=:${datos.correo}`,
         datos.web && `URL:${datos.web}`,
         wa && `URL:${wa}`,
         datos.linkedin && `URL:${datos.linkedin}`,
