@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarjeta de presentacion - Funcionarios</title>
+
+<meta name="description" content="Tarjeta de presentación digital funcionarios.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="tarjeta">
+<meta property="og:description" content="Tarjeta de presentación digital">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1iBxyZdqK9EV1MmmXS6piXzEKyaffKTqa=w2000?authuser=0">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    min-height: 100vh;
+    background: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.tarjeta {
+    position: relative;
+    width: 100%;
+    max-width: 702px;
+    aspect-ratio: 702 / 1247;
+    overflow: hidden;
+    background: #073b91;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.fondo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.contenido {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+}
+
+.informacion {
+    position: absolute;
+    left: 12.5%;
+    top: 15.5%;
+    width: 75%;
+    height: 19.5%;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+}
+
+.informacion > div {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.1;
+    overflow: hidden;
+}
+
+.nombre,
+.apellido {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(24px, 6.4vw, 46px);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.area {
+    font-size: clamp(14px, 3.2vw, 24px);
+    font-weight: bold;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones sobre los íconos de la imagen */
+.boton-social {
+    position: absolute;
+    width: 10.5%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    border: 3px solid transparent;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border .2s ease;
+}
+
+@media (hover: hover) {
+    .boton-social:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.13);
+        border: 3px solid rgba(255, 255, 255, 0.55);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12), 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .boton-social:hover::before {
+        content: "";
+        position: absolute;
+        width: 65%;
+        height: 65%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+        animation: pulso 1s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .boton-social:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .guardar:hover {
+        background: rgba(255, 255, 255, 0.13);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25), 0 0 25px rgba(255, 255, 255, 0.25);
+        transform: translateY(-3px);
+    }
+
+    .guardar:hover::after { opacity: 1; }
+}
+
+@keyframes pulso {
+    0%, 100% { transform: scale(0.85); opacity: 0.45; }
+    50%      { transform: scale(1);    opacity: 0.8; }
+}
+
+.boton-social:active {
+    transform: scale(0.94);
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+.whatsapp { left: 18.1%; top: 46.7%; }
+.correo   { left: 34%;   top: 47.3%; }
+.telefono { left: 50.6%; top: 46.5%; }
+.linkedin { left: 66.8%; top: 42.9%; }
+
+/* Botón sobre "Guardar contacto" */
+.guardar {
+    position: absolute;
+    left: 11.5%;
+    top: 61.25%;
+    width: 77%;
+    height: 8.5%;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 30;
+    transition: all .22s ease;
+}
+
+.guardar:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Texto emergente */
+.boton-social::after,
+.guardar::after {
+    position: absolute;
+    left: 50%;
+    background: #fff;
+    color: #222;
+    border: 1px solid #8a8a8a;
+    border-radius: 3px;
+    padding: 4px 9px;
+    font: 14px "Segoe UI", Arial, Helvetica, sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.boton-social::after {
+    content: attr(data-text);
+    bottom: -38px;
+    transform: translateX(-50%) translateY(5px);
+    transition: all .2s ease;
+}
+
+.guardar::after {
+    content: "Guardar este contacto";
+    bottom: -40px;
+    transform: translateX(-50%);
+    transition: opacity .2s ease;
+}
+
+/* Mensaje de confirmación */
+.mensaje {
+    position: fixed;
+    left: 50%;
+    bottom: 25px;
+    transform: translateX(-50%) translateY(20px);
+    background: #073b91;
+    color: #fff;
+    padding: 13px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease;
+    z-index: 100;
+}
+
+.mensaje.mostrar {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (min-width: 703px) {
+    .tarjeta { margin: 20px 0; }
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 0;
+        background: #073b91;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+    .tarjeta {
+        max-width: none;
+        width: min(100%, calc(100vh * 702 / 1247));
+        width: min(100%, calc(100dvh * 702 / 1247));
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .nombre, .apellido { font-size: 21px; }
+    .area { font-size: 12px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="tarjeta">
+    <img class="fondo" src="https://lh3.googleusercontent.com/d/1iBxyZdqK9EV1MmmXS6piXzEKyaffKTqa=w2000?authuser=0">
+
+    <div class="contenido">
+        <div class="informacion">
+            <div class="nombre" id="nombre"></div>
+            <div class="apellido" id="apellido"></div>
+            <div class="area" id="area"></div>
+        </div>
+
+        <a class="boton-social whatsapp" id="btnWhatsapp" target="_blank" data-text="WhatsApp" aria-label="WhatsApp"></a>
+        <a class="boton-social correo" id="btnCorreo" data-text="Correo" aria-label="Correo"></a>
+        <a class="boton-social telefono" id="btnTelefono" data-text="Llamar" aria-label="Teléfono"></a>
+        <a class="boton-social linkedin" id="btnLinkedin" target="_blank" data-text="LinkedIn" aria-label="LinkedIn"></a>
+
+        <button class="guardar" onclick="guardarContacto()" aria-label="Guardar contacto"></button>
+    </div>
+</div>
+
+<div id="mensaje" class="mensaje">Contacto preparado</div>
+
+<script>
+const datos = {
+    nombre: "María Angelíca",
+    apellido: "Miranda",
+    area: "Directora",
+    telefono: "+573115990089",
+    whatsapp: "+573115990089",
+    correo: "mmiranda@alupar.com.co",
+    linkedin: "https://co.linkedin.com/company/alupar-latam",
+    web: "https://www.alupar.com",
+    direccion: "Calle 93 # 12 - 14 Oficina 401 Bogotá, Colombia"
+};
+
+const $ = id => document.getElementById(id);
+
+$("nombre").textContent = datos.nombre;
+$("apellido").textContent = datos.apellido;
+$("area").textContent = datos.area;
+$("btnWhatsapp").href = "https://wa.me/" + datos.whatsapp;
+$("btnCorreo").href = "mailto:" + datos.correo;
+$("btnTelefono").href = "tel:" + datos.telefono.replace(/[\s()-]/g, "");
+$("btnLinkedin").href = datos.linkedin;
+
+function guardarContacto() {
+    const esc = t => String(t).replace(/([\\,;])/g, "\\$1");
+    const tel = datos.telefono.replace(/[\s()-]/g, "");
+
+    const wa = datos.whatsapp && "https://wa.me/" + datos.whatsapp;
+    const notas = [
+        wa && "WhatsApp: " + wa,
+        datos.linkedin && "LinkedIn: " + datos.linkedin
+    ].filter(Boolean).join("\\n");
+
+    const lineas = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        `N:${esc(datos.apellido)};${esc(datos.nombre)};;;`,
+        `FN:${esc(datos.nombre + " " + datos.apellido)}`,
+        `ORG:${esc(datos.area)}`,
+        tel && `TEL;TYPE=CELL:${tel}`,
+        datos.correo && `EMAIL;TYPE=INTERNET:${datos.correo}`,
+        datos.web && `URL:${datos.web}`,
+        wa && `URL:${wa}`,
+        datos.linkedin && `URL:${datos.linkedin}`,
+        datos.direccion && `ADR;TYPE=WORK:;;${esc(datos.direccion)};;;;`,
+        notas && `NOTE:${notas}`,
+        "END:VCARD"
+    ].filter(Boolean);
+
+    const vcard = lineas.join("\r\n");
+
+    const url = URL.createObjectURL(new Blob([vcard], { type: "text/vcard;charset=utf-8" }));
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = (datos.nombre + " " + datos.apellido)
+        .replace(/\s+/g, "_")
+        .replace(/[^a-zA-Z0-9_-]/g, "") + ".vcf";
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+    const mensaje = $("mensaje");
+    mensaje.classList.add("mostrar");
+    setTimeout(() => mensaje.classList.remove("mostrar"), 2500);
+}
+</script>
+
+</body>
+</html>
