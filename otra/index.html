@@ -315,7 +315,7 @@ function guardarContacto() {
         "VERSION:3.0",
         `N:${esc(datos.apellido)};${esc(datos.nombre)};;;`,
         `FN:${esc(datos.nombre + " " + datos.apellido)}`,
-        `ORG:${esc(datos.area)}`,
+        `ORG:Alupar`,
         tel && `TEL;TYPE=CELL:${tel}`,
         datos.correo && `EMAIL;TYPE=INTERNET:${datos.correo}`,
         datos.web && `URL:${datos.web}`,
